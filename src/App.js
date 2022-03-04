@@ -1,18 +1,16 @@
 import { useState } from "react";
 import AddTask from "./components/AddTask";
 import ListTask from "./components/ListTask";
+import { TASK_DATA } from "./data/task";
 
 function App() {
-  let [counter, setCounter] = useState(0);
-
-  const handleClick = () => setCounter(counter + 1);
-
+  const [listTask, setListTask] = useState(TASK_DATA)
   return (
     <>
       <div>
         <AddTask />
         <hr />
-        <ListTask />
+        <ListTask list={listTask} />
       </div>
     </>
   );
