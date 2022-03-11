@@ -14,6 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style type="text/tailwindcss">
+      /* *{font-family: monospace} */
       @layer components {
         .title {
           @apply text-center text-4xl;
@@ -59,9 +60,9 @@
     <title>Document</title>
   </head>
 
-  <body>
+  <body class="truncate">
     <!-- Add task  -->
-    <h1 class="title">Add Task</h1>
+    <h1 class="title mt-4">Add Task</h1>
     <div class="add-task-wrapper">
       <input
         type="text"
@@ -120,21 +121,51 @@
     <div
       class="absolute h-screen w-screen bg-transparent flex items-start mt-40 justify-center left-0 top-0"
     >
-    <!-- Modal confirm  -->
+      <!-- Modal confirm  -->
 
-      <div class="bg-white w-1/3 h-30 rounded px-5 pt-5 pb-3 shadow-lg shadow-black-500">
+      <div
+        class="bg-white w-1/3 h-30 rounded px-5 pt-5 pb-3 shadow-lg shadow-black-500"
+      >
         <div class="flex justify-between">
           <h1 class="font-bold text-xl">Delete Task ?</h1>
           <span class="cursor-pointer">
-            <i class="fa-solid fa-circle-xmark"></i>
+            <i class="fa-solid fa-circle-xmark text-red-400"></i>
           </span>
         </div>
-        <p class="mt-2">Are you sure you want to remove this task 😨 ?</p>
+        <div>
+          <p class="mt-2">Are you sure you want to remove this task 😨 ?</p>
+        </div>
         <div class="flex justify-end gap-1 mt-2">
           <button class="task-btn btn-danger">NO</button>
           <button class="task-btn btn-primary">YES</button>
         </div>
       </div>
+
+      <!-- Modal edit  -->
+      <div
+      class="bg-white h-30 rounded px-5 pt-3 pb-3 shadow-lg shadow-black-500 hidden"
+    >
+      <div class="flex justify-between">
+        <h1 class="font-bold text-xl">Edit Task (1)</h1>
+        <span class="cursor-pointer">
+          <i class="fa-solid fa-circle-xmark text-red-400"></i>
+        </span>
+      </div>
+      <div class="pt-4">
+        <label for="1">Title : </label>
+        <input
+        id="1"
+        type="text"
+        placeholder="edit your task's title 😇"
+        class="border p-1 focus:ring focus:ring-violet-100 outline-none rounded text-sm"
+        value="This is my first task "
+      />
+      </div>
+      <div class="flex justify-end gap-1 mt-2">
+        <button class="task-btn btn-danger">NO</button>
+        <button class="task-btn btn-primary">YES</button>
+      </div>
+    </div>
     </div>
   </body>
 </html>

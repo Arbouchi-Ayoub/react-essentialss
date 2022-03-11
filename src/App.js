@@ -10,7 +10,20 @@ function App() {
   //add new task
   const addNewTask = (titleTask) => {
     // alert(titleTask);
-    setListTask([...listTask, new TaskModel(listTask.length + 1, titleTask)]);
+    setListTask([
+      ...listTask,
+      new TaskModel(
+        (  listTask[listTask.length - 1]
+          ? listTask[listTask.length - 1].id
+          : 0) + 1,
+        titleTask
+      ),
+    ]);
+  };
+
+  const deleteTaskById = (taskId) => {
+    let newListTask = listTask.filter((t) => t.id !== taskId);
+    setListTask(newListTask);
   };
 
   return (
@@ -18,7 +31,7 @@ function App() {
       <div>
         <AddTask onAddTask={addNewTask} />
         <hr />
-        <ListTask list={listTask} />
+        <ListTask list={listTask} onDeleteTask={deleteTaskById} onEditTask={editTaskById} />
       </div>
     </>
   );
