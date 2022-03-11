@@ -13,9 +13,8 @@ function App() {
     setListTask([
       ...listTask,
       new TaskModel(
-        (  listTask[listTask.length - 1]
-          ? listTask[listTask.length - 1].id
-          : 0) + 1,
+        (listTask[listTask.length - 1] ? listTask[listTask.length - 1].id : 0) +
+          1,
         titleTask
       ),
     ]);
@@ -26,12 +25,29 @@ function App() {
     setListTask(newListTask);
   };
 
+  const editTaskById = (newTitle,taskId) => {
+    let newListTask = listTask.map(
+      t=>{
+        if(t.id===taskId)
+        {
+          t.title = newTitle
+        }
+        return t 
+      }
+    )
+    setListTask(newListTask)
+  };
+
   return (
     <>
       <div>
         <AddTask onAddTask={addNewTask} />
         <hr />
-        <ListTask list={listTask} onDeleteTask={deleteTaskById} onEditTask={editTaskById} />
+        <ListTask
+          list={listTask}
+          onDeleteTask={deleteTaskById}
+          onEditTask={editTaskById}
+        />
       </div>
     </>
   );

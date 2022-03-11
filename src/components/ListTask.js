@@ -79,7 +79,9 @@ const ListTask = ({ list, onDeleteTask,onEditTask }) => {
                 Close
               </button>
               <button type="button" 
-              onClick={handleUpdateTask} className="btn btn-primary">
+              onClick={handleUpdateTask} 
+              className="btn btn-primary"
+              data-bs-dismiss="modal">
                 Update
               </button>
             </div>
