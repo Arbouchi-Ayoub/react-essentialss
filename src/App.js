@@ -38,6 +38,17 @@ function App() {
     setListTask(newListTask)
   };
 
+  const filterTask = (queryTitle)=>{
+    let listCopy = [...listTask]
+    
+    if(queryTitle!=="")
+    setListTask(
+      listTask.filter(
+        t=>t.title.includes(queryTitle)
+      )
+    )
+  }
+
   return (
     <>
       <div>
@@ -47,6 +58,7 @@ function App() {
           list={listTask}
           onDeleteTask={deleteTaskById}
           onEditTask={editTaskById}
+          onFilterTask={filterTask}
         />
       </div>
     </>

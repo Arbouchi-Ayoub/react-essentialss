@@ -2,26 +2,29 @@ import React, { useRef, useState } from "react";
 import { TaskModel } from "../model/task";
 import Task from "./Task";
 
-const ListTask = ({ list, onDeleteTask,onEditTask }) => {
+const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
   //ref
   const refTitle = useRef("");
-  //state 
-  const [updatedTaskID, setUpdatedTaskID] = useState()
- 
+  //state
+  const [updatedTaskID, setUpdatedTaskID] = useState();
+
   //actions
   const handleDeleteTask = (taskId) => {
     onDeleteTask(taskId);
   };
-  const handleEditTask = (editedTask=new TaskModel()) => {
-    refTitle.current.value=editedTask.title
-    setUpdatedTaskID(editedTask.id)
-  }
-  const handleUpdateTask = ()=>{
-    let title = refTitle.current.value
-    if(!title) alert("Error Empty values 😥")
-    else onEditTask(title,updatedTaskID)
-  }
+  const handleEditTask = (editedTask = new TaskModel()) => {
+    refTitle.current.value = editedTask.title;
+    setUpdatedTaskID(editedTask.id);
+  };
+  const handleUpdateTask = () => {
+    let title = refTitle.current.value;
+    if (!title) alert("Error Empty values 😥");
+    else onEditTask(title, updatedTaskID);
+  };
 
+  const handleChangeFilter = (e) => {
+    onFilterTask(e.target.value)
+  };
 
   return (
     <>
@@ -30,14 +33,17 @@ const ListTask = ({ list, onDeleteTask,onEditTask }) => {
         type="text"
         className="form-control w-50 mx-auto"
         placeholder="filter by title"
+        onChange={handleChangeFilter}
       />
       <ul className="list-group m-1">
         {/* <Task title="title 1" />
         <Task title="title 2" /> */}
         {list.map((t, i) => (
-          <Task key={t.id} data={t} 
-          onDelete={handleDeleteTask} 
-          onEdit={handleEditTask}
+          <Task
+            key={t.id}
+            data={t}
+            onDelete={handleDeleteTask}
+            onEdit={handleEditTask}
           />
         ))}
       </ul>
@@ -78,10 +84,12 @@ const ListTask = ({ list, onDeleteTask,onEditTask }) => {
               >
                 Close
               </button>
-              <button type="button" 
-              onClick={handleUpdateTask} 
-              className="btn btn-primary"
-              data-bs-dismiss="modal">
+              <button
+                type="button"
+                onClick={handleUpdateTask}
+                className="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
                 Update
               </button>
             </div>
