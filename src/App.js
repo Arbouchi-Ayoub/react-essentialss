@@ -6,23 +6,29 @@ import { TaskModel } from "./model/task";
 
 function App() {
   const [listTask, setListTask] = useState(TASK_DATA);
+  const [listTaskBuckup, setListTaskBuckup] = useState(TASK_DATA);
 
   //add new task
   const addNewTask = (titleTask) => {
-    // alert(titleTask);
-    setListTask([
+    let newList =[
       ...listTask,
       new TaskModel(
-        (listTask[listTask.length - 1] ? listTask[listTask.length - 1].id : 0) +
+        (listTask[listTask.length - 1] 
+          ? listTask[listTask.length - 1].id : 0) +
           1,
         titleTask
       ),
-    ]);
+    ]
+    // alert(titleTask);
+    setListTask(newList);
+
+    setListTaskBuckup(newList)
   };
 
   const deleteTaskById = (taskId) => {
     let newListTask = listTask.filter((t) => t.id !== taskId);
     setListTask(newListTask);
+    setListTaskBuckup(newListTask)
   };
 
   const editTaskById = (newTitle,taskId) => {
@@ -36,17 +42,19 @@ function App() {
       }
     )
     setListTask(newListTask)
+    setListTaskBuckup(newListTask)
   };
 
   const filterTask = (queryTitle)=>{
-    let listCopy = [...listTask]
     
     if(queryTitle!=="")
     setListTask(
-      listTask.filter(
+      listTaskBuckup.filter(
         t=>t.title.includes(queryTitle)
       )
     )
+    else 
+    setListTask(listTaskBuckup)
   }
 
   return (
