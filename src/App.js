@@ -1,27 +1,25 @@
-import { useState } from "react";
-import AddTask from "./components/AddTask";
-import ListTask from "./components/ListTask";
-import { TASK_DATA } from "./data/task";
-import { TaskModel } from "./model/task";
+import React, { Component } from "react";
+import Child from "./components/child";
 
-function App() {
-  const [listTask, setListTask] = useState(TASK_DATA);
-
-  //add new task
-  const addNewTask = (titleTask) => {
-    // alert(titleTask);
-    setListTask([...listTask, new TaskModel(listTask.length + 1, titleTask)]);
+export default class App extends Component {
+  state = {
+    show: false,
   };
 
-  return (
-    <>
-      <div>
-        <AddTask onAddTask={addNewTask} />
-        <hr />
-        <ListTask list={listTask} />
-      </div>
-    </>
-  );
-}
+  handleToggleCounter = () =>
+    this.setState({
+      show: !this.state.show,
+    });
 
-export default App;
+  render() {
+    return (
+      <>
+        <button onClick={this.handleToggleCounter} className="btn btn-warning">
+          show Counter
+        </button>
+
+        {this.state.show ? <Child /> : null}
+      </>
+    );
+  }
+}
