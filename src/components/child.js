@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 export default class Child extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       counter: 0,
     };
@@ -13,7 +13,8 @@ export default class Child extends Component {
     console.log("cmpt did mount ");
   }
 
-  componentDidUpdate(_,prevState) {
+  componentDidUpdate(prevProps,prevState) {
+    //   console.log(prevProps,prevState);
     console.log(`did update from ${prevState.counter} to ${this.state.counter}`);
   }
 
