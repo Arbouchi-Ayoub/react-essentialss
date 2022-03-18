@@ -18,7 +18,7 @@ export default class App extends Component {
           show Counter
         </button>
 
-        {this.state.show ? <Child initialVA={0} /> : null}
+        {this.state.show ? <Child /> : null}
       </>
     );
   }

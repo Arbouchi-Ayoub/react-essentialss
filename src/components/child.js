@@ -1,41 +1,37 @@
-import React, { Component } from "react";
+import { useEffect, useState } from "react";
 
-export default class Child extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: 0,
-    };
-    console.log("construtor");
-  }
+export default function Child() {
+  const [counter, setCounter] = useState(0);
+  //component did mount
+  useEffect(() => {
+    console.log("useEffect");
+  }, []);
 
-  componentDidMount() {
-    console.log("cmpt did mount ");
-  }
+  //component did update
+  //   useEffect(() => {
+  //     if (counter !== 0) console.log(counter);
+  //   });
 
-  componentDidUpdate(prevProps,prevState) {
-    //   console.log(prevProps,prevState);
-    console.log(`did update from ${prevState.counter} to ${this.state.counter}`);
-  }
+  //component did update
+  useEffect(() => {
+    if (counter !== 0) console.log(counter);
+  }, [counter]);
 
-  componentWillUnmount() {
-    console.log("will unmount");
-  }
 
-  handleClick = () => {
-    // this.state.counter++
-    // this.forceUpdate()
-    this.setState({ counter: this.state.counter + 1 });
-  };
+  //cpmt will unmount  
+  useEffect(() => {
+    return () => console.log("good bye !")
+  },[]);
 
-  render() {
-    return (
-      <>
-        <h1>{this.state.counter}</h1>
-        <button onClick={this.handleClick} className="btn btn-success">
-          Increment 😇
-        </button>
-      </>
-    );
-  }
+  return (
+    <>
+      <h1>{counter}</h1>
+      <button
+        onClick={() => setCounter(counter + 1)}
+        className="btn btn-success"
+      >
+        Increment 😇
+      </button>
+    </>
+  );
 }
