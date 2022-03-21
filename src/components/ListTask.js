@@ -3,6 +3,8 @@ import { TaskModel } from "../model/task";
 import Task from "./Task";
 
 const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
+  console.log("render LIST 🐰")
+
   //ref
   const refTitle = useRef("");
   //state
@@ -25,6 +27,8 @@ const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
   const handleChangeFilter = (e) => {
     onFilterTask(e.target.value)
   };
+
+  
 
   return (
     <>

@@ -5,6 +5,8 @@ import { TASK_DATA } from "./data/task";
 import { TaskModel } from "./model/task";
 
 function App() {
+  console.log("render APP 😇")
+
   const [listTask, setListTask] = useState(TASK_DATA);
   const [listTaskBuckup, setListTaskBuckup] = useState(TASK_DATA);
 

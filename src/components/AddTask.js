@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 
 const AddTask = ({onAddTask}) => {
+  console.log("render ADD 🌬️")
   //ref title
   const refTitle = useRef("");
 
