@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const AddTask = ({onAddTask}) => {
+const AddTask = ({ onAddTask }) => {
   //ref title
   const refTitle = useRef("");
 
@@ -8,12 +8,12 @@ const AddTask = ({onAddTask}) => {
     //get the input title value
     // console.log(refTitle.current.value)
     let titleTask = refTitle.current.value;
-    if(!titleTask) alert("empty value error 😥")
-    else{
+    if (!titleTask) alert("empty value error 😥");
+    else {
       //send titletask to my parent (app)
-      onAddTask(titleTask)
+      onAddTask(titleTask);
       //set input value to empty
-      refTitle.current.value=""
+      refTitle.current.value = "";
     }
   };
 
