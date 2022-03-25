@@ -1,34 +1,40 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import AddTask from "./components/AddTask";
-import ListTask from "./components/ListTask";
+import { AddTask, ListTask } from "./components";
+import Loader from "./shared/loader";
+import Message from "./shared/message";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  //le comp est branche
   useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/todos")
-      .then((r) =>{ 
-        setTasks(r.data)
-        setError("")
-      })
-      .catch((e) => {
-        // console.log(Object.keys(e.response.data));
-        setError("Error Server");
-      });
+    setLoading(true);
+    setTimeout(() => {
+      axios
+        .get("https://jsonplaceholder.typicode.com/todos")
+        .then((r) => {
+          setLoading(false);
+          setTasks(r.data);
+          setErrorMsg("");
+        })
+        .catch((e) => {
+          setLoading(false);
+          // console.log(Object.keys(e.response.data));
+          setErrorMsg("Error Server");
+        });
+    }, 2000);
   }, []);
 
   return (
     <>
-      <div>
+      <div className="text-center">
         <AddTask />
         <hr />
-        <ListTask list={tasks} />
-        <div className={error!=="" ? "alert alert-danger":"d-none"} >
-          {error}
-        </div>
+        {loading ? <Loader /> : <ListTask list={tasks} />}
+        <Message msg={errorMsg} status="danger" />
       </div>
     </>
   );

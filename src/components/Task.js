@@ -1,7 +1,7 @@
 import React from "react";
 import { TaskModel } from "../model/task";
 
-const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
+export const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
   const handleClickDel = () => {
     if (window.confirm("Are you sure ? ")) onDelete(data.id);
   };
@@ -32,4 +32,3 @@ const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
   );
 };
 
-export default Task;

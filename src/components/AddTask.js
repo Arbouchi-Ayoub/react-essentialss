@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-const AddTask = ({ onAddTask }) => {
+export const AddTask = ({ onAddTask }) => {
   //ref title
   const refTitle = useRef("");
 
@@ -35,4 +35,3 @@ const AddTask = ({ onAddTask }) => {
   );
 };
 
-export default AddTask;

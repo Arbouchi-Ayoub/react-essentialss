@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { TaskModel } from "../model/task";
-import Task from "./Task";
+import {Task} from "./Task";
 
-const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
+export const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask,limit=4}) => {
   //ref
   const refTitle = useRef("");
   //state
@@ -38,7 +38,7 @@ const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
       <ul className="list-group m-1">
         {/* <Task title="title 1" />
         <Task title="title 2" /> */}
-        {list.map((t, i) => (
+        {list.filter((_,i)=>i<limit).map((t, i) => (
           <Task
             key={t.id}
             data={t}
@@ -100,4 +100,3 @@ const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
   );
 };
 
-export default ListTask;
