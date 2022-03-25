@@ -1,16 +1,23 @@
 import React, { useRef, useState } from "react";
 import { TaskModel } from "../model/task";
-import {Task} from "./Task";
+import { Task } from "./Task";
 
-export const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask,limit=4}) => {
+export const ListTask = ({
+  list,
+  onDeleteTask,
+  onEditTask,
+  onFilterTask,
+  limit = 4
+}) => {
+
   //ref
   const refTitle = useRef("");
   //state
   const [updatedTaskID, setUpdatedTaskID] = useState();
 
   //actions
-  const handleDeleteTask = (taskId) => {
-    onDeleteTask(taskId);
+  const handleDeleteTask = (taskId,setLoader) => {
+    onDeleteTask(taskId,setLoader);
   };
   const handleEditTask = (editedTask = new TaskModel()) => {
     refTitle.current.value = editedTask.title;
@@ -23,7 +30,7 @@ export const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask,limit=4}
   };
 
   const handleChangeFilter = (e) => {
-    onFilterTask(e.target.value)
+    onFilterTask(e.target.value);
   };
 
   return (
@@ -38,14 +45,16 @@ export const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask,limit=4}
       <ul className="list-group m-1">
         {/* <Task title="title 1" />
         <Task title="title 2" /> */}
-        {list.filter((_,i)=>i<limit).map((t, i) => (
-          <Task
-            key={t.id}
-            data={t}
-            onDelete={handleDeleteTask}
-            onEdit={handleEditTask}
-          />
-        ))}
+        {list
+          .filter((_, i) => i < limit)
+          .map((t, i) => (
+            <Task
+              key={t.id}
+              data={t}
+              onDelete={handleDeleteTask}
+              onEdit={handleEditTask}
+            />
+          ))}
       </ul>
       {/* Modal */}
       <div
@@ -99,4 +108,3 @@ export const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask,limit=4}
     </>
   );
 };
-

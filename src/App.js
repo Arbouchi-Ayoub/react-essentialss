@@ -8,6 +8,7 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  let setLoaderForDeleteTask = () => {};
 
   //le comp est branche
   useEffect(() => {
@@ -28,12 +29,40 @@ function App() {
     }, 2000);
   }, []);
 
+  //______Actions______
+  const deleteTaskById = (taskId, setLoading) => {
+    // console.log(f)
+    setLoaderForDeleteTask = (s) => {
+      setLoading(s);
+      setTimeout(() => {
+        setErrorMsg("");
+      }, 1000);
+    };
+    setTimeout(() => {
+      axios
+        .delete(`https://jsonplaceholder.typicode.com/tod/0`)
+        .then((r) => {
+          //delete task from state (ui)
+          setTasks([...tasks.filter((t) => t.id !== taskId)]);
+          setErrorMsg("");
+        })
+        .catch((e) => {
+          setErrorMsg("Error Server");
+          setLoaderForDeleteTask(false);
+        });
+    }, 2000);
+  };
+
   return (
     <>
       <div className="text-center">
         <AddTask />
         <hr />
-        {loading ? <Loader /> : <ListTask list={tasks} />}
+        {loading ? (
+          <Loader />
+        ) : (
+          <ListTask list={tasks} onDeleteTask={deleteTaskById} />
+        )}
         <Message msg={errorMsg} status="danger" />
       </div>
     </>
