@@ -1,6 +1,7 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import { useEffect, useState } from "react";
 import { AddTask, ListTask } from "./components";
+import { TaskModel } from "./model/task";
 import Loader from "./shared/loader";
 import Message from "./shared/message";
 
@@ -40,7 +41,7 @@ function App() {
     };
     setTimeout(() => {
       axios
-        .delete(`https://jsonplaceholder.typicode.com/tod/0`)
+        .delete(`https://jsonplaceholder.typicode.com/todos/${taskId}`)
         .then((r) => {
           //delete task from state (ui)
           setTasks([...tasks.filter((t) => t.id !== taskId)]);
@@ -53,6 +54,18 @@ function App() {
     }, 2000);
   };
 
+  const editTaskById = (title, updatedTaskID)=>{
+    axios
+    .put(`https://jsonplaceholder.typicode.com/todos/${updatedTaskID}`, new TaskModel(updatedTaskID, title))
+    .then((r)=>{
+      console.log(r);
+    })
+    .catch((e)=>{
+      console.log(e);
+    })
+
+  }
+
   return (
     <>
       <div className="text-center">
@@ -61,7 +74,7 @@ function App() {
         {loading ? (
           <Loader />
         ) : (
-          <ListTask list={tasks} onDeleteTask={deleteTaskById} />
+          <ListTask list={tasks} onEditTask={editTaskById} onDeleteTask={deleteTaskById} />
         )}
         <Message msg={errorMsg} status="danger" />
       </div>
