@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { TaskModel } from "../model/task";
-import Loader from "../shared/loader";
+import { Loader } from "../shared";
 
 export const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
-  //state
+  
   const [loading, setLoading] = useState(false);
 
   const handleClickDel = () => {
