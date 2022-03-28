@@ -1,19 +1,15 @@
-import { useState } from "react";
-
+import ProbCmpt from "./components/ProbCmpt";
+import SolutionCmpt from "./components/SolutionCmpt";
 
 function App() {
-  let [counter,setCounter]  = useState(0)
-  
-  const handleClick = ()=> setCounter(counter + 1)
-  
-
   return (
-    <div className="App">
-      {counter}{" "}
-      hello world 😇 !!
-      <button 
-      onClick={handleClick}>+</button>
-    </div>
+    <>
+    <h1>Without memo</h1>
+      <ProbCmpt />
+      <hr />
+      <h1>With memo</h1>
+      <SolutionCmpt />
+    </>
   );
 }
 
