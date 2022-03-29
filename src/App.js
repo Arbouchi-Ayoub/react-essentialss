@@ -1,16 +1,12 @@
-import ProbCmpt from "./components/ProbCmpt";
-import SolutionCmpt from "./components/SolutionCmpt";
+import ParentCmpt from "./components/Parent";
+import Solution from "./components/Solution";
 
-function App() {
-  return (
-    <>
-    <h1>Without memo</h1>
-      <ProbCmpt />
-      <hr />
-      <h1>With memo</h1>
-      <SolutionCmpt />
-    </>
-  );
-}
+
+const App = () => (
+<>
+  <ParentCmpt/>
+  <hr />
+  <Solution/>
+</>)
 
 export default App;
