@@ -8,6 +8,7 @@ function ProbCmpt() {
 
   const increment1 = () => {
     setCounter1(counter1 + 1);
+
   };
 
   const increment2 = () => {
@@ -24,11 +25,15 @@ function ProbCmpt() {
     <div
       style={{ border: "solid 1px", textAlign: "center", padding: 10, zoom: 3 }}
     >
-      <button onClick={increment1}> counter One - {counter1} </button>
-      {isEven(counter1)}
+      <button 
+      onClick={increment1}> 
+      counter One - {counter1} 
+      </button>
+      {isEven()}
       <br />
       <br />
-      <button onClick={increment2}> counter Two - {counter2} </button>
+      <button onClick={increment2}> 
+      counter Two - {counter2} </button>
     </div>
   );
 }
