@@ -8,7 +8,6 @@ function App() {
   console.log("render APP 😇")
 
   const [listTask, setListTask] = useState(TASK_DATA);
-  const [listTaskBuckup, setListTaskBuckup] = useState(TASK_DATA);
 
   //add new task
   const addNewTask = (titleTask) => {
@@ -24,13 +23,11 @@ function App() {
     // alert(titleTask);
     setListTask(newList);
 
-    setListTaskBuckup(newList)
   };
 
   const deleteTaskById = (taskId) => {
     let newListTask = listTask.filter((t) => t.id !== taskId);
     setListTask(newListTask);
-    setListTaskBuckup(newListTask)
   };
 
   const editTaskById = (newTitle,taskId) => {
@@ -44,20 +41,7 @@ function App() {
       }
     )
     setListTask(newListTask)
-    setListTaskBuckup(newListTask)
   };
-
-  const filterTask = (queryTitle)=>{
-    
-    if(queryTitle!=="")
-    setListTask(
-      listTaskBuckup.filter(
-        t=>t.title.includes(queryTitle)
-      )
-    )
-    else 
-    setListTask(listTaskBuckup)
-  }
 
   return (
     <>
@@ -68,7 +52,6 @@ function App() {
           list={listTask}
           onDeleteTask={deleteTaskById}
           onEditTask={editTaskById}
-          onFilterTask={filterTask}
         />
       </div>
     </>

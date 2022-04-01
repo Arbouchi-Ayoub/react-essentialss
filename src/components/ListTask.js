@@ -2,13 +2,15 @@ import React, { useRef, useState } from "react";
 import { TaskModel } from "../model/task";
 import Task from "./Task";
 
-const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
+const ListTask = ({ list, onDeleteTask, onEditTask, onFilterTask }) => {
   console.log("render LIST 🐰")
 
   //ref
   const refTitle = useRef("");
   //state
   const [updatedTaskID, setUpdatedTaskID] = useState();
+  const [filterQuery, setFilterQuery] = useState("")
+
 
   //actions
   const handleDeleteTask = (taskId) => {
@@ -25,10 +27,11 @@ const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
   };
 
   const handleChangeFilter = (e) => {
-    onFilterTask(e.target.value)
+    setFilterQuery(e.target.value)
   };
 
-  
+
+
 
   return (
     <>
@@ -42,7 +45,7 @@ const ListTask = ({ list, onDeleteTask, onEditTask ,onFilterTask}) => {
       <ul className="list-group m-1">
         {/* <Task title="title 1" />
         <Task title="title 2" /> */}
-        {list.map((t, i) => (
+        {list.filter(t => t.title.includes(filterQuery)).map((t, i) => (
           <Task
             key={t.id}
             data={t}
