@@ -1,12 +1,12 @@
 import ParentCmpt from "./components/Parent";
-import Solution from "./components/Solution";
+import SolutionCmpt from "./components/Solution";
 
 
 const App = () => (
 <>
   <ParentCmpt/>
   <hr />
-  {/* <Solution/> */}
+  <SolutionCmpt/>
 </>)
 
 export default App;
