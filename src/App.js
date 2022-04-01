@@ -6,7 +6,7 @@ const App = () => (
 <>
   <ParentCmpt/>
   <hr />
-  <Solution/>
+  {/* <Solution/> */}
 </>)
 
 export default App;
