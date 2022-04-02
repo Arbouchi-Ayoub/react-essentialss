@@ -16,10 +16,13 @@ const ListTask = ({ list, onDeleteTask, onEditTask, onFilterTask }) => {
   const handleDeleteTask = (taskId) => {
     onDeleteTask(taskId);
   };
+  
   const handleEditTask = (editedTask = new TaskModel()) => {
     refTitle.current.value = editedTask.title;
     setUpdatedTaskID(editedTask.id);
   };
+
+
   const handleUpdateTask = () => {
     let title = refTitle.current.value;
     if (!title) alert("Error Empty values 😥");
