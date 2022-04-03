@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { TaskModel } from "../model/task";
 import Task from "./Task";
 
-const ListTask = ({ list, onDeleteTask, onEditTask, onFilterTask }) => {
-  console.log("render LIST 🐰")
+const ListTask = ({ list, onDeleteTask, onEditTask }) => {
 
   //ref
   const refTitle = useRef("");
