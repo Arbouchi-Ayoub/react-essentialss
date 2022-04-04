@@ -16,13 +16,17 @@ function App() {
   return (
     <>
       <div>
-        <AddTask onAddTask={(title) => dispatch(new ActionModel(ADD, { title }))} />
-
+        <AddTask
+          onAddTask={
+            (title) => dispatch(ActionModel.create((ADD, { title })))
+          } />
         <hr />
         <ListTask
           list={tasks}
-          onDeleteTask={(taskId) => dispatch(new ActionModel(DEL, { taskId }))}
-          onEditTask={(title, taskId) => dispatch(new ActionModel(EDIT, { title, taskId }))}
+          onDeleteTask={
+            (taskId) => dispatch(ActionModel.create(DEL, { taskId }))}
+          onEditTask={
+            (title, taskId) => dispatch(ActionModel.create(EDIT, { title, taskId }))}
         />
       </div>
     </>
