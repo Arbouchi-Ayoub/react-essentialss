@@ -3,7 +3,6 @@ import { TaskModel } from "../model/task";
 
 const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
 
-  console.log("render TASK 🐭")
 
   const handleClickDel = () => {
     if (window.confirm("Are you sure ? ")) onDelete(data.id);
