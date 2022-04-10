@@ -21,7 +21,7 @@ const AppRoutes = () => {
                     */
                 }
 
-                <Route path="todos" element={<ListTodoPage />} />
+                <Route path="" element={<ListTodoPage />} />
                 <Route path="todo/edit/:todoId" element={<EditTodoPage />} />
                 <Route path="todo/add" element={<AddTodoPage />} />
                 <Route path="todo/:todoId/details" element={<DetailsTodoPage />} />

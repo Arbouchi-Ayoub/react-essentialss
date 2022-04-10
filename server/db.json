@@ -7,7 +7,7 @@
             "status":"TODO",
             "dueDate":null,
             "startDate":null,
-            "finDate":null,
+            "endDate":null,
             "tags":[
                 "design","routing"
             ],

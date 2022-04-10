@@ -7,6 +7,6 @@ class MenuItemData{
 
 export const MENU_DATA = [
 
-    new MenuItemData("My Tasks","/todos"),
+    new MenuItemData("My Tasks","/"),
     new MenuItemData("New Task","/todo/add")
 ]

@@ -4,9 +4,9 @@ import {FormUI} from "shared/interface"
 
 export const AddTodoPage = () => {
   return (
-    <ThemeWebsite titlePage={"Add Task"} >
+    <ThemeWebsite titlePage="Add Task" >
 
-      <FormUI actionName='save'/>  
+      <FormUI actionName='save' />  
 
     </ThemeWebsite>
   )
