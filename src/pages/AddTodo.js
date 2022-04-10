@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThemeWebsite } from 'theme/website'
-import {FormUI} from "shared/interface"
+import { FormUI } from "shared/interface"
 
 export const AddTodoPage = () => {
   return (
