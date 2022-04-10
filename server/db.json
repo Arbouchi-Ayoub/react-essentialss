@@ -1,0 +1,25 @@
+{
+    "todos": [
+        {
+            "id": 1,
+            "title": "create the global design",
+            "description": "create all the pages and setup routing configuration with the layout component inside the shared folder",
+            "status":"TODO",
+            "dueDate":null,
+            "startDate":null,
+            "finDate":null,
+            "tags":[
+                "design","routing"
+            ],
+            "userId":1
+        }
+    ],
+    "users":[
+        {
+            "id":1,
+            "firstname":"mehdi",
+            "lastname":"dev",
+            "avatarURL":"https://thecinetalk.com/wp-content/uploads/2021/07/4rf9n506ymr21.jpg"
+        }
+    ]
+}
