@@ -1,5 +1,5 @@
 
-export const Btn = ({ children, color = "warning", type = "button", disabled }) => {
+export const Button = ({ children, color = "warning", type = "button", disabled }) => {
     return (
         <span style={{ cursor: !disabled ? "" : "not-allowed" }}>
             <button type={type} className={`btn btn-${color} `}

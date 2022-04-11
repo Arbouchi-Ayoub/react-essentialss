@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Input, InputSelect, Btn, Loader, Message } from "shared/interface"
+import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
 
 class FormData {
     constructor(inputs = {}, isAnErrorExist = false) { this.inputs = inputs; this.isAnErrorExist = isAnErrorExist }
@@ -31,19 +31,23 @@ export const FormUI = ({ actionName, isLoading = false, onSubmit, message }) => 
                 onChange={handleChangeInput}
                 name="title"
                 w={25} />
+
             <Input
                 onChange={handleChangeInput}
                 name="description"
                 w={25} />
+
             <InputSelect
                 onChange={handleChangeInput}
             />
-            <Btn
+
+            <Button
                 type="submit"
                 disabled={isDisabled()}>
                 {actionName}
                 {isLoading ? <Loader /> : null}
-            </Btn>
+            </Button>
+
             <Message color="success" content={message} alert />
         </form>
     )
