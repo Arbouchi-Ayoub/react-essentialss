@@ -31,7 +31,7 @@ export const Navbar = () => {
 
                     <form className="d-flex align-items-center ">
                         {/* USER INFOS  */}
-                        <UserInfo u={new UserModel(1, "Mehdi", "Dev")} />
+                        <UserInfo u={new UserModel(1, "Saitama", "Dev")} />
                         <button className="btn btn-outline-danger" type="submit">logout</button>
                     </form>
                 </div>

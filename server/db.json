@@ -1,25 +1,76 @@
 {
-    "todos": [
-        {
-            "id": 1,
-            "title": "create the global design",
-            "description": "create all the pages and setup routing configuration with the layout component inside the shared folder",
-            "status":"TODO",
-            "dueDate":null,
-            "startDate":null,
-            "endDate":null,
-            "tags":[
-                "design","routing"
-            ],
-            "userId":1
-        }
-    ],
-    "users":[
-        {
-            "id":1,
-            "firstname":"mehdi",
-            "lastname":"dev",
-            "avatarURL":"https://thecinetalk.com/wp-content/uploads/2021/07/4rf9n506ymr21.jpg"
-        }
-    ]
+  "todos": [
+    {
+      "id": 1,
+      "title": "create the global design",
+      "description": "create all the pages and setup routing configuration with the layout component inside the shared folder",
+      "status": "TODO",
+      "dueDate": null,
+      "startDate": null,
+      "endDate": null,
+      "tags": [
+        "design",
+        "routing"
+      ],
+      "userId": 1
+    },
+    {
+      "desc": "description 0",
+      "dueDate": null,
+      "InpDate": null,
+      "finDate": null,
+      "status": "INPROGRESS",
+      "id": 2,
+      "title": "task 0",
+      "userId": 1
+    },
+    {
+      "desc": "description 0",
+      "dueDate": null,
+      "InpDate": null,
+      "finDate": null,
+      "status": "INPROGRESS",
+      "id": 3,
+      "title": "task 0",
+      "userId": 1
+    },
+    {
+      "desc": "description 3",
+      "dueDate": null,
+      "InpDate": null,
+      "finDate": null,
+      "status": "INPROGRESS",
+      "id": 4,
+      "title": "title 3",
+      "userId": 1
+    },
+    {
+      "desc": "description 5",
+      "dueDate": null,
+      "InpDate": null,
+      "finDate": null,
+      "status": "INPROGRESS",
+      "id": 5,
+      "title": "title 5",
+      "userId": 1
+    },
+    {
+      "desc": "desc 6",
+      "dueDate": null,
+      "InpDate": null,
+      "finDate": null,
+      "status": "TODO",
+      "id": 6,
+      "title": "title 6",
+      "userId": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "firstname": "mehdi",
+      "lastname": "dev",
+      "avatarURL": "https://thecinetalk.com/wp-content/uploads/2021/07/4rf9n506ymr21.jpg"
+    }
+  ]
 }
