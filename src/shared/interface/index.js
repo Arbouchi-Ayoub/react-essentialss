@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { StatusTodo, TaskModel } from "model/task"
+import { isDisabled } from "@testing-library/user-event/dist/utils"
 
 const Message = ({ content = "", color = "danger" }) => {
     return (
@@ -32,7 +33,7 @@ const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => {
     const [input, setInput] = useState(withVal)
     const handleChange = (e) => {
         const val = e.target.value
-        const isAnErrorExist = !input || !isLocatedInStatusTodo(val)
+        const isAnErrorExist = !val || !isLocatedInStatusTodo(val)
         onChange({ status: val }, isAnErrorExist)
         setInput(val)
     }
@@ -68,7 +69,7 @@ const Input = ({ name, type = "text", w = 50, withVal = "", onChange }) => {
         let val = e.target.value
         setInput(val)
         if (firstTime) setFirstTime(false)
-        const isAnErrorExist = !input
+        let isAnErrorExist = val === ""
         onChange({ [name]: val }, isAnErrorExist)
     }
 
@@ -95,48 +96,51 @@ const Input = ({ name, type = "text", w = 50, withVal = "", onChange }) => {
     )
 }
 
-const Btn = ({ children, color = "warning", type = "button",disabled }) => {
+const Btn = ({ children, color = "warning", type = "button", disabled }) => {
     return (
-        <button type={type} className={`btn btn-${color} `} disabled={disabled}>
-            <div className="d-flex gap-2 align-items-center text-uppercase">
-                {children}
-            </div>
-        </button>
+        <span style={{ cursor: !disabled ? "" : "not-allowed" }}>
+            <button type={type} className={`btn btn-${color} `} disabled={disabled} style={{ pointerEvents: !disabled ? "" : "none" }}>
+                <div className="d-flex gap-2 align-items-center text-uppercase">
+                    {children}
+                </div>
+            </button>
+        </span>
     )
 }
 
 
 
+class FormData {
+    constructor(inputs = {}, isAnErrorExist = false) { this.inputs = inputs; this.isAnErrorExist = isAnErrorExist }
+}
 
 export const FormUI = ({ actionName, isLoading = false, onSubmit }) => {
 
-    //local variable 
-    let inputs = {}
-    let errors = {}
-
     //state
-    const [areInputsEmpty, setInputsEmpty] = useState(true)
+    const [data, setData] = useState(new FormData())
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        onSubmit(data.inputs)
+
     }
 
     const handleChangeInput = (propertyInput, isAnErrorExist) => {
         let key = Object.keys(propertyInput)[0]
         let val = propertyInput[key]
-        inputs = { ...inputs, [key]: val }
-        errors = { ...errors, [key]: isAnErrorExist }
-        onSubmit({ inputs, errors })
-        setInputsEmpty(!(Object.keys(inputs).length === 3))
-        
+        let inputs = { ...data.inputs, [key]: val }
+        setData({ inputs, isAnErrorExist })
+
     }
+
+    const isDisabled = () => !(Object.keys(data.inputs).length === 3) || data.isAnErrorExist
 
     return (
         <form onSubmit={handleSubmit}>
             <Input onChange={handleChangeInput} name="title" w={25} />
             <Input onChange={handleChangeInput} name="description" w={25} />
             <InputSelect onChange={handleChangeInput} />
-            <Btn type="submit" disabled={areInputsEmpty}>
+            <Btn type="submit" disabled={isDisabled()}>
                 {actionName}
                 {
                     isLoading ? <Loader /> : null
