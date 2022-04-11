@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { StatusTodo } from "model/task"
+import { StatusTodo, TaskModel } from "model/task"
 
 const Message = ({ content = "", color = "danger" }) => {
     return (
@@ -17,10 +17,25 @@ const Loader = ({ color = "dark", size = 20 }) => {
     )
 }
 
-const InputSelect = ({ w = 50, withVal = StatusTodo.TODO }) => {
+//helpers
+const isLocatedInStatusTodo = (val) => {
+    let isLocated = false
+    Object.keys(StatusTodo).map(k => {
+        if (StatusTodo[k] === val) isLocated = true
+    })
+    return isLocated
+}
+
+
+const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => {
 
     const [input, setInput] = useState(withVal)
-    const handleChange = (e) => setInput(e.target.value)
+    const handleChange = (e) => {
+        const val = e.target.value
+        const isAnErrorExist = !input || !isLocatedInStatusTodo(val)
+        onChange({ status: val }, isAnErrorExist)
+        setInput(val)
+    }
 
     return (
 
@@ -31,7 +46,7 @@ const InputSelect = ({ w = 50, withVal = StatusTodo.TODO }) => {
                 className={`form-select text-capitalize w-${w} mx-auto mb-3`}
             >
                 {
-                    Object.keys(StatusTodo).map((key,i) => (
+                    Object.keys(StatusTodo).map((key, i) => (
                         <option key={i} value={StatusTodo[key]}>{key}</option>
                     ))
                 }
@@ -44,47 +59,35 @@ const InputSelect = ({ w = 50, withVal = StatusTodo.TODO }) => {
     )
 }
 
-const Input = ({ placeholder, type = "text", w = 50, withVal = "" }) => {
+const Input = ({ name, type = "text", w = 50, withVal = "", onChange }) => {
 
     const [input, setInput] = useState(withVal)
-    const [firstTime,setFirstTime] = useState(true)
-    
-    const handleChange = (e) => {
-        setInput(e.target.value)
-        if(firstTime) setFirstTime(false)
-    }
+    const [firstTime, setFirstTime] = useState(true)
 
-    // useEffect(() => {
-    //   setInput(" ")
-    // }, [])
+    const handleChange = (e) => {
+        let val = e.target.value
+        setInput(val)
+        if (firstTime) setFirstTime(false)
+        const isAnErrorExist = !input
+        onChange({ [name]: val }, isAnErrorExist)
+    }
 
     return (
         <>
-
             <div className={`form-floating mb-3 w-${w} mx-auto p-0`}>
                 <input
+                    name={name}
                     type={type}
                     className={`form-control ${!input && !firstTime ? "border-danger" : ""}`}
-                    placeholder={placeholder}
+                    placeholder={name}
                     onChange={handleChange}
                     value={input}
-                  
+
                 />
-                <label>
-                    {placeholder}
+                <label className="text-capitalize">
+                    {name}
                 </label>
             </div >
-
-            {/* message  */}
-            {/* 
-                <p className={!input ? "text-danger" : "d-none"} >
-                    this field is required !
-                </p>
-                {
-                    input && <p className="text-danger"> this field is required !</p>
-                } 
-            */}
-
             <Message content={!input && !firstTime ? "this field is required" : ""} />
 
         </>
@@ -92,9 +95,9 @@ const Input = ({ placeholder, type = "text", w = 50, withVal = "" }) => {
     )
 }
 
-const Btn = ({ children, color = "warning", type = "button" }) => {
+const Btn = ({ children, color = "warning", type = "button",disabled }) => {
     return (
-        <button type={type} className={`btn btn-${color} `} >
+        <button type={type} className={`btn btn-${color} `} disabled={disabled}>
             <div className="d-flex gap-2 align-items-center text-uppercase">
                 {children}
             </div>
@@ -102,34 +105,38 @@ const Btn = ({ children, color = "warning", type = "button" }) => {
     )
 }
 
-// Btn delete case 
-{/* 
-<button class="btn btn-danger">
-    <i className="fas fa-trush"></i>
-</button> 
-*/}
 
-//submit btn 
-{/* 
-<button type="submit">
-    save 
-    <Loader/>
-</button> 
-*/}
 
 
 export const FormUI = ({ actionName, isLoading = false, onSubmit }) => {
 
+    //local variable 
+    let inputs = {}
+    let errors = {}
+
+    //state
+    const [areInputsEmpty, setInputsEmpty] = useState(true)
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit()
     }
+
+    const handleChangeInput = (propertyInput, isAnErrorExist) => {
+        let key = Object.keys(propertyInput)[0]
+        let val = propertyInput[key]
+        inputs = { ...inputs, [key]: val }
+        errors = { ...errors, [key]: isAnErrorExist }
+        onSubmit({ inputs, errors })
+        setInputsEmpty(!(Object.keys(inputs).length === 3))
+        
+    }
+
     return (
         <form onSubmit={handleSubmit}>
-            <Input placeholder="Task Title" w={25} withVal="title 1" />
-            <Input placeholder="Task Description" w={25}/>
-            <InputSelect />
-            <Btn type="submit" >
+            <Input onChange={handleChangeInput} name="title" w={25} />
+            <Input onChange={handleChangeInput} name="description" w={25} />
+            <InputSelect onChange={handleChangeInput} />
+            <Btn type="submit" disabled={areInputsEmpty}>
                 {actionName}
                 {
                     isLoading ? <Loader /> : null
