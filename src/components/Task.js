@@ -1,16 +1,6 @@
-import React from "react";
-import { TaskModel } from "../model/task";
+import { TaskModel } from "model";
 
-const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
-
-
-  const handleClickDel = () => {
-    if (window.confirm("Are you sure ? ")) onDelete(data.id);
-  };
-
-  const handleClickEdit = () => {
-    onEdit(data);
-  };
+export const Task = ({ data = new TaskModel()}) => {
 
   return (
     <li className="list-group-item d-flex justify-content-between w-50 mx-auto align-items-center">
@@ -33,5 +23,3 @@ const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
     </li>
   );
 };
-
-export default Task;

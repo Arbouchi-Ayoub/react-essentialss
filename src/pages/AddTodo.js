@@ -1,6 +1,6 @@
-import { ThemeWebsite } from 'theme/website'
-import { FormUI } from "shared"
+import { ThemeWebsite } from "theme/website"
 import { useHook } from "hook"
+import { AddTask } from "components"
 
 export const AddTodoPage = () => {
 
@@ -10,12 +10,7 @@ export const AddTodoPage = () => {
 
     <ThemeWebsite titlePage="Add Task" >
 
-      <FormUI
-        actionName='save'
-        onSubmit={handleSubmit}
-        isLoading={isLoading}
-        message={msg}
-      />
+      <AddTask msg={msg} loader={isLoading} onSubmit={handleSubmit} />
 
     </ThemeWebsite>
   )
