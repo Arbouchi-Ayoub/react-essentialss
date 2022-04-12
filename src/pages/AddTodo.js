@@ -1,40 +1,20 @@
-import React, { useState } from 'react'
 import { ThemeWebsite } from 'theme/website'
 import { FormUI } from "shared"
-import { client } from 'tools/axios'
-import { TaskModel } from 'model'
+import { useHook } from "hook"
 
 export const AddTodoPage = () => {
 
-  const [isLoading, setLoading] = useState(false)
-  const [msg, setMsg] = useState("")
-
-  const handleSubmit = ({ title, description, status }) => {
-    setLoading(true)
-    setTimeout(() => {
-      client.post(
-        "/todos",
-        new TaskModel(null, title, description, status)
-      ).then(
-        (r) => {
-          setLoading(false)
-          setMsg(`Task ${r.data.id} added successfully 😎 !`)
-        }
-      )
-    }, 2000)
-
-  }
-
+  const { msg, isLoading, handleSubmit } = useHook.addTodo()
 
   return (
 
     <ThemeWebsite titlePage="Add Task" >
 
-      <FormUI 
-        actionName='save' 
-        onSubmit={handleSubmit} 
-        isLoading={isLoading} 
-        message={msg} 
+      <FormUI
+        actionName='save'
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+        message={msg}
       />
 
     </ThemeWebsite>

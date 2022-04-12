@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
+import { FormData } from "model"
 
-class FormData {
-    constructor(inputs = {}, isAnErrorExist = false) { this.inputs = inputs; this.isAnErrorExist = isAnErrorExist }
-}
 
 export const FormUI = ({ actionName, isLoading = false, onSubmit, message }) => {
 
@@ -12,7 +10,6 @@ export const FormUI = ({ actionName, isLoading = false, onSubmit, message }) => 
     const handleSubmit = (e) => {
         e.preventDefault()
         onSubmit(data.inputs)
-
     }
 
     const handleChangeInput = (propertyInput, isAnErrorExist) => {
@@ -48,7 +45,7 @@ export const FormUI = ({ actionName, isLoading = false, onSubmit, message }) => 
                 {isLoading ? <Loader /> : null}
             </Button>
 
-            <Message color="success" content={message} alert />
+            <Message msg={message} alert />
         </form>
     )
 }

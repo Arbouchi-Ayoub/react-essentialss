@@ -1,21 +1,23 @@
-import { StatusTodo } from 'model'
 import { useEffect, useState } from 'react'
 import { isLocatedInStatusTodo } from 'helpers'
 import { Message } from "shared/interface"
+import { MessageModel, StatusTodo } from 'model'
 
 export const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => {
 
     const [input, setInput] = useState(withVal)
+
     const handleChange = (e) => {
         const val = e.target.value
         const isAnErrorExist = !val || !isLocatedInStatusTodo(val)
         onChange({ status: val }, isAnErrorExist)
         setInput(val)
     }
+
     useEffect(() => {
-      onChange(input)
-    },[])
-    
+        onChange({ status: input })
+    }, [])
+
 
     return (
 
@@ -32,8 +34,10 @@ export const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => 
                 }
 
             </select>
-            <Message content={!input ? " this field is required" : ""} />
-            <Message content={!isLocatedInStatusTodo(input) ? "invalid status task value " : ""} />
+            <Message
+                msg={!isLocatedInStatusTodo(input) ?
+                    new MessageModel("invalid status task value")
+                    : new MessageModel()} />
         </>
 
 
@@ -61,20 +65,20 @@ export const Input = ({ name, type = "text", w = 50, withVal = "", onChange }) =
         <>
             <div className={`form-floating mb-3 w-${w} mx-auto p-0`}>
                 <input
-                    onFocus={handleFocus}
-                    name={name}
-                    type={type}
                     className={`form-control ${!input && !firstTime ? "border-danger" : ""}`}
                     placeholder={name}
                     onChange={handleChange}
+                    onFocus={handleFocus}
                     value={input}
-
+                    name={name}
+                    type={type}
                 />
                 <label className="text-capitalize">
                     {name}
                 </label>
             </div >
-            <Message content={!input && !firstTime ? "this field is required" : ""} />
+
+            <Message msg={!input && !firstTime ? new MessageModel("this field is required") : new MessageModel()} />
 
         </>
 

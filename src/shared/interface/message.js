@@ -1,7 +1,10 @@
-export const Message = ({ content = "", color = "danger", alert = false }) => {
+import { MessageModel } from "model"
+
+export const Message = ({ msg = new MessageModel(), alert = false }) => {
+
     return (
-        <p className={`m-2 ${alert && 'alert alert-' + color} ${content ? "text-" + color : "d-none"}`} >
-            {content}
+        <p className={` ${msg.content ? `${!alert ? "text-" : " mt-2 alert alert-"}` + msg.type : "d-none"}`} >
+            {msg.content}
         </p>
     )
 }
