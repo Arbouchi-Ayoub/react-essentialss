@@ -22,10 +22,24 @@ export const ListTodoPage = () => {
 
   }, [])
 
+
+  const deleteTaskById = (todoId, setLoaderDelete) => {
+    setTimeout(() => {
+      TodoApi.delete(todoId)
+        .then(
+          (r) => {
+            setLoaderDelete(false)
+            setLoading(false)
+            setTodos([...todos.filter(t => t.id !== todoId)])
+          }
+        )
+    }, 2000)
+  }
+
   return (
     <ThemeWebsite titlePage="List Tasks">
       {
-        isLoading ? <Loader /> : <ListTask list={todos} />
+        isLoading ? <Loader /> : <ListTask list={todos} onDeleteTask={deleteTaskById} />
       }
     </ThemeWebsite>
   )

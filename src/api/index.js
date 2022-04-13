@@ -2,6 +2,7 @@ import { TaskModel } from "model"
 import { client } from "tools/axios"
 
 export class TodoApi {
+    
     static post(todo = new TaskModel()) {
         return client.request(
             {
@@ -19,6 +20,12 @@ export class TodoApi {
         })
     }
 
+    static delete(todoId = 0) {
+        return client.request({
+            url: "/todos/"+todoId,
+            method: "DELETE",
+        })
+    }
 
 
 
