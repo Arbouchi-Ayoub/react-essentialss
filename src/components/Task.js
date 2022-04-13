@@ -1,24 +1,29 @@
 import { TaskModel } from "model";
+import { Button } from "shared/interface";
 
-export const Task = ({ data = new TaskModel()}) => {
+export const Task = ({ data = new TaskModel() }) => {
 
+  const handleDelete = ()=> alert("Delete task ...")
+  const handleEdit = ()=> alert("Edit task ...")
+  const handleMoreDetails = ()=>alert("More details ...")
+  
   return (
     <li className="list-group-item d-flex justify-content-between w-50 mx-auto align-items-center">
       <div>
         <input type="checkbox" /> <span>{data.title}</span>
       </div>
       <div>
-        <button className="btn btn-danger me-1" onClick={handleClickDel}>
+        <Button color="danger" className="me-1" onClick={handleDelete}>
           DEL
-        </button>
-        <button
-          onClick={handleClickEdit}
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
+        </Button>
+
+        <Button color="primary" className="me-1" onClick={handleEdit} modal target="edit">
           EDIT
-        </button>
+        </Button>
+
+        <Button onClick={handleMoreDetails}>
+          DETAILS
+        </Button>
       </div>
     </li>
   );
