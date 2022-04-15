@@ -1,54 +1,70 @@
-import { useState } from "react";
 import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
+import { StatusTodo } from "model"
+import { useState } from "react"
 
-class FormData {
-    constructor(inputs = {}, isAnErrorExist = false) { this.inputs = inputs; this.isAnErrorExist = isAnErrorExist }
+//helper
+const isEmpty = (data) => {
+
+    for (const p in data) {
+        if (data[p] === "") return true
+    }
+    return false
 }
 
-export const FormUI = ({ actionName, isLoading = false, onSubmit, message }) => {
+//ayoub
+let data = {
+    title: "",
+    description: "",
+    status: StatusTodo.TODO
+}
 
-    const [data, setData] = useState(new FormData())
+export const FormUI = ({ actionName, isLoading = false, onSubmit, msg }) => {
+
+    const [isDisabled, setDisabled] = useState(true)
+    const [reset, setReset] = useState(false)
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit(data.inputs)
-
+        onSubmit(data, setReset)
     }
 
-    const handleChangeInput = (propertyInput, isAnErrorExist) => {
-        let key = Object.keys(propertyInput)[0]
-        let val = propertyInput[key]
-        let inputs = { ...data.inputs, [key]: val }
-        setData({ inputs, isAnErrorExist })
-
+    const handleChangeInput = (input) => {
+        //develop by marouane  
+        data = { ...data, ...input }
+        //check data 
+        setDisabled(isEmpty(data))
     }
-
-    const isDisabled = () => !(Object.keys(data.inputs).length === 3) || data.isAnErrorExist
 
     return (
         <form onSubmit={handleSubmit}>
             <Input
-                onChange={handleChangeInput}
+                onChangeVal={handleChangeInput}
                 name="title"
-                w={25} />
+                w={25}
+                isReset={reset} />
 
             <Input
-                onChange={handleChangeInput}
+                onChangeVal={handleChangeInput}
                 name="description"
-                w={25} />
+                w={25}
+                isReset={reset} />
 
             <InputSelect
-                onChange={handleChangeInput}
+                name="status"
+                onChangeVal={handleChangeInput}
+                isReset={reset}
             />
 
             <Button
-                type="submit"
-                disabled={isDisabled()}>
+                isDisabled={isDisabled}
+                type="submit">
                 {actionName}
                 {isLoading ? <Loader /> : null}
             </Button>
 
-            <Message color="success" content={message} alert />
+            <Message content={msg.content} color={msg.error ? "danger" : "success"} alert />
+            
         </form>
     )
 }

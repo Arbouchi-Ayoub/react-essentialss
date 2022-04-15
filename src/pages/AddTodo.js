@@ -7,9 +7,10 @@ import { TaskModel } from 'model'
 export const AddTodoPage = () => {
 
   const [isLoading, setLoading] = useState(false)
-  const [msg, setMsg] = useState("")
+  const [msg, setMsg] = useState({ content: "", error: false })
 
-  const handleSubmit = ({ title, description, status }) => {
+  const handleSubmit = (inputs,resetForm) => {
+    const { title, description, status } = inputs
     setLoading(true)
     setTimeout(() => {
       client.post(
@@ -17,10 +18,17 @@ export const AddTodoPage = () => {
         new TaskModel(null, title, description, status)
       ).then(
         (r) => {
-          setLoading(false)
-          setMsg(`Task ${r.data.id} added successfully 😎 !`)
+          resetForm(true)
+          setMsg({ ...msg, content: `Task ${r.data.id} added successfully 😎 !` })
         }
-      )
+      ).catch(
+        (e) => {
+          console.log(e)
+          setMsg({ content: `Something is wrong  !`, error: true })
+        }
+      ).finally(() => {
+        setLoading(false)
+      })
     }, 2000)
 
   }
@@ -30,11 +38,11 @@ export const AddTodoPage = () => {
 
     <ThemeWebsite titlePage="Add Task" >
 
-      <FormUI 
-        actionName='save' 
-        onSubmit={handleSubmit} 
-        isLoading={isLoading} 
-        message={msg} 
+      <FormUI
+        actionName='save'
+        onSubmit={handleSubmit}
+        isLoading={isLoading}
+        msg={msg}
       />
 
     </ThemeWebsite>

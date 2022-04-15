@@ -3,19 +3,20 @@ import { useEffect, useState } from 'react'
 import { isLocatedInStatusTodo } from 'helpers'
 import { Message } from "shared/interface"
 
-export const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => {
+export const InputSelect = ({ name, w = 50, withVal = StatusTodo.TODO, onChangeVal, isReset = false }) => {
 
     const [input, setInput] = useState(withVal)
+
     const handleChange = (e) => {
         const val = e.target.value
-        const isAnErrorExist = !val || !isLocatedInStatusTodo(val)
-        onChange({ status: val }, isAnErrorExist)
+        onChangeVal({ [name]: val })
         setInput(val)
     }
+
     useEffect(() => {
-      onChange(input)
-    },[])
-    
+        if(isReset)
+        setInput(StatusTodo.TODO)
+    }, [isReset])
 
     return (
 
@@ -23,6 +24,7 @@ export const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => 
             <select
                 onChange={handleChange}
                 value={input}
+                name={name}
                 className={`form-select text-capitalize w-${w} mx-auto mb-3`}
             >
                 {
@@ -40,28 +42,31 @@ export const InputSelect = ({ w = 50, withVal = StatusTodo.TODO, onChange }) => 
     )
 }
 
-export const Input = ({ name, type = "text", w = 50, withVal = "", onChange }) => {
+//withval : in case we gonna use for edit feature 
+export const Input = ({ name, type = "text", w = 50, withVal = "", onChangeVal, isReset = false }) => {
 
     const [input, setInput] = useState(withVal)
     const [firstTime, setFirstTime] = useState(true)
 
     const handleChange = (e) => {
         let val = e.target.value
+        onChangeVal({ [name]: val })
         setInput(val)
         if (firstTime) setFirstTime(false)
-        let isAnErrorExist = val === ""
-        onChange({ [name]: val }, isAnErrorExist)
     }
 
-    const handleFocus = () => {
-        setInput("")
-        setFirstTime(true)
-    }
+    useEffect(() => {
+        if(isReset){
+            setInput("")
+            setFirstTime(true)
+        }
+        
+    }, [isReset])
+
     return (
         <>
             <div className={`form-floating mb-3 w-${w} mx-auto p-0`}>
                 <input
-                    onFocus={handleFocus}
                     name={name}
                     type={type}
                     className={`form-control ${!input && !firstTime ? "border-danger" : ""}`}
