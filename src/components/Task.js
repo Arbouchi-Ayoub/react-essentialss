@@ -1,37 +1,54 @@
-import React from "react";
-import { TaskModel } from "../model/task";
+import { TaskModel } from "model";
+import { useState } from "react";
+import { Button, Loader } from "shared/interface";
 
-const Task = ({ data = new TaskModel(), onDelete, onEdit }) => {
+export const Task = ({ data = new TaskModel(), onDelete }) => {
 
+  const [loading, setLoading] = useState(false)
 
-  const handleClickDel = () => {
-    if (window.confirm("Are you sure ? ")) onDelete(data.id);
-  };
+  const handleDelete = () => {
+    if (window.confirm("Are you sure ?")) {
+      setLoading(true)
+      onDelete(data.id, setLoading)
+    }
+  }
 
-  const handleClickEdit = () => {
-    onEdit(data);
-  };
+  const handleEdit = () => alert("Edit task ...")
+  const handleMoreDetails = () => alert("More details ...")
 
   return (
     <li className="list-group-item d-flex justify-content-between w-50 mx-auto align-items-center">
+
       <div>
         <input type="checkbox" /> <span>{data.title}</span>
       </div>
+
       <div>
-        <button className="btn btn-danger me-1" onClick={handleClickDel}>
+
+        <Button
+          color="danger"
+          className="me-1"
+          onClick={handleDelete}
+        >
           DEL
-        </button>
-        <button
-          onClick={handleClickEdit}
-          className="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          { loading ? <Loader /> : null }
+        </Button>
+
+        <Button
+          color="primary"
+          className="me-1"
+          onClick={ handleEdit }
+          target="edit"
+          modal
         >
           EDIT
-        </button>
+        </Button>
+
+        <Button onClick={handleMoreDetails}>
+          DETAILS
+        </Button>
+
       </div>
     </li>
   );
 };
-
-export default Task;

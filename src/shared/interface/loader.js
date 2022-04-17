@@ -1,7 +1,7 @@
 export const Loader = ({ color = "dark", size = 20 }) => {
     return (
-        <div class={`spinner-grow text-${color}`} style={{ height: size, width: size }}>
-            <span class="visually-hidden">Loading...</span>
+        <div className={`spinner-grow text-${color}`} style={{ height: size, width: size }}>
+            <span className="visually-hidden">Loading...</span>
         </div>
     )
 }
