@@ -3,7 +3,12 @@ import { useEffect, useState } from 'react'
 import { isLocatedInStatusTodo } from 'helpers'
 import { Message } from "shared/interface"
 
-export const InputSelect = ({ name, w = 50, withVal = StatusTodo.TODO, onChangeVal, isReset = false }) => {
+export const InputSelect = ({
+    name,
+    w = 50,
+    withVal = StatusTodo.TODO,
+    onChangeVal,
+    isReset = false }) => {
 
     const [input, setInput] = useState(withVal)
 
@@ -14,8 +19,8 @@ export const InputSelect = ({ name, w = 50, withVal = StatusTodo.TODO, onChangeV
     }
 
     useEffect(() => {
-        if(isReset)
-        setInput(StatusTodo.TODO)
+        if (isReset)
+            setInput(StatusTodo.TODO)
     }, [isReset])
 
     return (
@@ -32,7 +37,6 @@ export const InputSelect = ({ name, w = 50, withVal = StatusTodo.TODO, onChangeV
                         <option key={i} value={StatusTodo[key]}>{key}</option>
                     ))
                 }
-
             </select>
             <Message content={!input ? " this field is required" : ""} />
             <Message content={!isLocatedInStatusTodo(input) ? "invalid status task value " : ""} />
@@ -56,11 +60,10 @@ export const Input = ({ name, type = "text", w = 50, withVal = "", onChangeVal, 
     }
 
     useEffect(() => {
-        if(isReset){
+        if (isReset) {
             setInput("")
             setFirstTime(true)
         }
-        
     }, [isReset])
 
     return (

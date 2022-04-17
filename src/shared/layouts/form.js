@@ -1,17 +1,8 @@
 import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
 import { StatusTodo } from "model"
 import { useEffect, useState } from "react"
+import { isThereAnEmptyValue } from "helpers"
 
-//helper
-const isEmpty = (data) => {
-
-    for (const p in data) {
-        if (data[p] === "") return true
-    }
-    return false
-}
-
-//ayoub
 let data = {
     title: "",
     description: "",
@@ -36,10 +27,8 @@ export const FormUI = ({
     }
 
     const handleChangeInput = (input) => {
-        //develop by marouane  
         data = { ...data, ...input }
-        //check data 
-        setDisabled(isEmpty(data))
+        setDisabled(isThereAnEmptyValue(data))
     }
 
     useEffect(() => {
