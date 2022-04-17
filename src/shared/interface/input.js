@@ -59,8 +59,7 @@ export const Input = ({ name, type = "text", w = 50, withVal = "", onChangeVal, 
         if(isReset){
             setInput("")
             setFirstTime(true)
-        }
-        
+        }        
     }, [isReset])
 
     return (

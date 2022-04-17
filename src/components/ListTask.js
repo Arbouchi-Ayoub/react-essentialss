@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import { TaskModel } from "../model/task";
-import Task from "./Task";
+import { TaskModel } from "model";
+import { Task } from "components";
 
-const ListTask = ({ list, onDeleteTask, onEditTask }) => {
+export const ListTask = ({ list, onDeleteTask, onEditTask }) => {
 
   //ref
   const refTitle = useRef("");
@@ -15,7 +15,7 @@ const ListTask = ({ list, onDeleteTask, onEditTask }) => {
   const handleDeleteTask = (taskId) => {
     onDeleteTask(taskId);
   };
-  
+
   const handleEditTask = (editedTask = new TaskModel()) => {
     refTitle.current.value = editedTask.title;
     setUpdatedTaskID(editedTask.id);
@@ -109,4 +109,3 @@ const ListTask = ({ list, onDeleteTask, onEditTask }) => {
   );
 };
 
-export default ListTask;

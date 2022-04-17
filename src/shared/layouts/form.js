@@ -1,6 +1,6 @@
 import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
 import { StatusTodo } from "model"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 //helper
 const isEmpty = (data) => {
@@ -18,15 +18,32 @@ let data = {
     status: StatusTodo.TODO
 }
 
-export const FormUI = ({ actionName, isLoading = false, onSubmit, msg }) => {
+export const FormUI = ({ actionName, isLoading = false, onSubmit, msg, delay = 2000 }) => {
 
     const [isDisabled, setDisabled] = useState(true)
     const [reset, setReset] = useState(false)
+    const [hideMsg, setHideMsg] = useState(true)
+
+
+
+    useEffect(() => {
+        if (msg.content !== "") {
+            if(!msg.error){
+                setReset(true)
+                setReset(false)
+            }
+            setHideMsg(false)
+            setTimeout(() => {
+                setHideMsg(true)
+                setReset(true)
+            }, delay)
+        }
+    }, [msg])
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit(data, setReset)
+        onSubmit(data)
     }
 
     const handleChangeInput = (input) => {
@@ -63,8 +80,13 @@ export const FormUI = ({ actionName, isLoading = false, onSubmit, msg }) => {
                 {isLoading ? <Loader /> : null}
             </Button>
 
-            <Message content={msg.content} color={msg.error ? "danger" : "success"} alert />
-            
+            {
+                hideMsg ? null : <Message
+                    content={msg.content}
+                    color={msg.error ? "danger" : "success"}
+                    alert />
+            }
+
         </form>
     )
 }

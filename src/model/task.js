@@ -1,5 +1,4 @@
 export const StatusTodo = {
-
     TODO: "TODO",
     DONE: "DONE",
     INPROGRESS: "INPROGRESS",
