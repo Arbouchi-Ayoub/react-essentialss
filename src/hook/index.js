@@ -1,16 +1,22 @@
 import { useReducer, useState } from "react"
 import { TodoApi } from "api"
-import { TaskModel } from "model"
+import { TaskModel, ActionModel } from "model"
 
-//types 
+// types 
 export const Types = {
     REQ_SUCCESS: "success",
     REQ_ERROR: "erreur",
     REQ_PENDING: "pending"
 }
 
+// actions 
+const pending = _ => ActionModel.create(Types.REQ_PENDING)
+const errorReq = (payload) => ActionModel.create(Types.REQ_ERROR, payload)
+const successReq = (payload) => ActionModel.create(Types.REQ_SUCCESS, payload)
+
+
 //reducer 
-const todoReducer = (prevState, { type, payload }) => {
+const requestReducer = (prevState, { type, payload }) => {
 
     switch (type) {
 
@@ -35,73 +41,56 @@ const todoReducer = (prevState, { type, payload }) => {
     }
 }
 
+//helpers
+const runAfter = (func, delay = 2000) => {
+    setTimeout(() => func(), delay)
+}
+
+const ActionHook = (action = "save") => {
+
+    let actionFunc;
+
+    switch (action) {
+        case "save":
+            actionFunc = (input) => TodoApi.post(new TaskModel(null, input.title, input.description, input.status))
+            break;
+        case "edit":
+            actionFunc = (input) => TodoApi.put(new TaskModel(input.id, input.title, input.description, input.status))
+            break
+    }
+
+    const [state, dispatch] =
+        useReducer(
+            requestReducer,
+            {
+                isLoading: false, msg: { content: "", error: false }
+            }
+        )
 
 
+    const handleSubmit = (inputs) => {
+
+        dispatch(pending())
+        runAfter(
+
+            async () => {
+                try {
+                    let r = await actionFunc(inputs)
+                    dispatch(successReq(`Task ${r.data.id} ${action === "save" ? "added" : "updated"} successfully 😎 !`))
+                } catch (error) {
+                    dispatch(errorReq(`Something is wrong 😢!`))
+                }
+            }
+        )
+
+
+    }
+
+    return { ...state, handleSubmit }
+}
 
 export const UseHook = {
 
-    AddTodo: () => {
-
-        const [isLoading, setLoading] = useState(false)
-        const [msg, setMsg] = useState({ content: "", error: false })
-
-        const handleSubmit = (inputs, resetForm) => {
-
-            const { title, description, status } = inputs
-
-            setLoading(true)
-            setTimeout(() => {
-                TodoApi.post(new TaskModel(null, title, description, status)).then(
-                    (r) => {
-                        resetForm(true)
-                        setMsg({ ...msg, content: `Task ${r.data.id} added successfully 😎 !` })
-                    }
-                ).catch(
-                    (e) => {
-                        console.log(e)
-                        setMsg({ content: `Something is wrong  !`, error: true })
-                    }
-                ).finally(() => {
-                    setLoading(false)
-                })
-            }, 2000)
-
-        }
-
-        return { isLoading, msg, handleSubmit }
-    },
-    EditTodo: () => {
-
-        const [state, dispatch] =
-            useReducer(
-                todoReducer,
-                {
-                    isLoading: false, msg: { content: "", error: false }
-                })
-
-
-        const handleSubmit = (inputs, resetForm) => {
-
-            const { title, description, status } = inputs
-
-            setLoading(true)
-
-            setTimeout(() => {
-                TodoApi.post(new TaskModel(null, title, description, status)).then(
-                    (r) => {
-                        resetForm(true)
-                        dispatch({ type: Types.REQ_SUCCESS, payload: `Task ${r.data.id} updated successfully 😎 !` })
-                    }
-                ).catch(
-                    (e) => {
-                        dispatch({ type: Types.REQ_ERROR, payload: `Something is wrong !` })
-                    }
-                )
-            }, 2000)
-
-        }
-
-        return { ...state, handleSubmit }
-    }
-
+    saveTodo: ActionHook,
+    editTodo: () => ActionHook("edit")
 } 

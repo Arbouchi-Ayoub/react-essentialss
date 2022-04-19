@@ -4,7 +4,7 @@ import { ActionsNames } from "shared/layouts/CONSTANT"
 
 export const AddTask = () => {
 
-  const { msg, isLoading, handleSubmit } = UseHook.AddTodo()
+  const { msg, isLoading, handleSubmit } = UseHook.saveTodo()
 
   return (
 

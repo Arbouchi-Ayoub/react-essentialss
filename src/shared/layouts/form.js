@@ -1,44 +1,58 @@
 import { Input, InputSelect, Button, Loader, Message } from "shared/interface"
 import { StatusTodo } from "model"
 import { useEffect, useState } from "react"
-import { isThereAnEmptyValue } from "helpers"
 
+//helper
+const isEmpty = (data) => {
+
+    for (const p in data) {
+        if (data[p] === "") return true
+    }
+    return false
+}
+
+//ayoub
 let data = {
     title: "",
     description: "",
     status: StatusTodo.TODO
 }
 
-export const FormUI = ({
-    actionName,
-    isLoading = false,
-    onSubmit,
-    msg,
-    delay = 2000 }) => {
+export const FormUI = ({ actionName, isLoading = false, onSubmit, msg, delay = 2000 }) => {
 
     const [isDisabled, setDisabled] = useState(true)
     const [reset, setReset] = useState(false)
     const [hideMsg, setHideMsg] = useState(true)
 
 
+
+    useEffect(() => {
+        if (msg.content !== "") {
+            if(!msg.error){
+                setReset(true)
+                setReset(false)
+            }
+            setHideMsg(false)
+            setTimeout(() => {
+                setHideMsg(true)
+                setReset(true)
+                setDisabled(true)
+            }, delay)
+        }
+    }, [msg])
+
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        onSubmit(data, setReset)
+        onSubmit(data)
     }
 
     const handleChangeInput = (input) => {
+        //develop by marouane  
         data = { ...data, ...input }
-        setDisabled(isThereAnEmptyValue(data))
+        //check data 
+        setDisabled(isEmpty(data))
     }
-
-    useEffect(() => {
-
-        if (msg.content !== "") {
-            setHideMsg(false)
-            setTimeout(() => setHideMsg(true), delay)
-        }
-
-    }, [msg])
 
     return (
         <form onSubmit={handleSubmit}>
@@ -68,11 +82,10 @@ export const FormUI = ({
             </Button>
 
             {
-                !hideMsg && <Message
+                hideMsg ? null : <Message
                     content={msg.content}
                     color={msg.error ? "danger" : "success"}
-                    alert
-                />
+                    alert />
             }
 
         </form>
