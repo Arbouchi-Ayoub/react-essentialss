@@ -19,4 +19,11 @@ export class TodoApi {
         })
     }
 
+    static get(todoId=0){
+        return client.request({
+            url:"/todos/"+ todo.id,
+            method:"GET"
+        })
+    }
+
 }
