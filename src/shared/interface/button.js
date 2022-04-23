@@ -5,10 +5,9 @@ export const Button = ({
     type = "button",
     isDisabled = false,
     className = "",
-    onClick,
-    modal = false,
-    target = "" }) => {
+    onClick }) => {
     return (
+        
         <span style={{ cursor: !isDisabled ? "" : "not-allowed" }}>
             <button
                 type={type}
@@ -16,8 +15,6 @@ export const Button = ({
                 disabled={isDisabled}
                 style={{ pointerEvents: !isDisabled ? "" : "none" }}
                 onClick={type === "button" ? () => onClick() : null}
-                data-bs-toggle={modal && "modal"}
-                data-bs-target={`#${target}`}
             >
                 <div className="d-flex gap-2 align-items-center text-uppercase">
                     {children}

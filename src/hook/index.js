@@ -1,94 +1,88 @@
-import { useReducer } from "react"
+import { useContext, useEffect } from "react"
 import { TodoApi } from "api"
-import { TaskModel, ActionModel } from "model"
+import { TodoContext, TodoTypes } from "context/todo"
+import { runAfter } from "helpers"
+import { TaskModel } from "model"
 
-// types 
-export const Types = {
-    REQ_SUCCESS: "success",
-    REQ_ERROR: "erreur",
-    REQ_PENDING: "pending"
-}
+//--------------ADD TODO-----------
+const SaveTodo = () => {
 
-// actions 
-const pending = _ => ActionModel.create(Types.REQ_PENDING)
-const errorReq = (payload) => ActionModel.create(Types.REQ_ERROR, payload)
-const successReq = (payload) => ActionModel.create(Types.REQ_SUCCESS, payload)
+    const { dispatch, todo } = useContext(TodoContext)
 
-
-//reducer 
-const requestReducer = (prevState, { type, payload }) => {
-
-    switch (type) {
-
-        case Types.REQ_SUCCESS: {
-            return {
-                isLoading: false,
-                msg: { ...prevState.msg, content: payload }
-            }
-        }
-        case Types.REQ_ERROR: {
-            return {
-                isLoading: false,
-                msg: { content: payload, error: true }
-            }
-        }
-        case Types.REQ_PENDING: return {
-            isLoading: true,
-            msg: {
-                ...prevState.msg
-            }
-        }
-    }
-}
-
-
-const ActionHook = (action = "save") => {
-
-    let actionFunc;
-
-    switch (action) {
-        case "save":
-            actionFunc = (input) => TodoApi.post(new TaskModel(null, input.title, input.description, input.status))
-            break;
-        case "edit":
-            actionFunc = (input) => TodoApi.put(new TaskModel(input.id, input.title, input.description, input.status))
-            break
-    }
-
-    const [state, dispatch] =
-        useReducer(
-            requestReducer,
-            {
-                isLoading: false, msg: { content: "", error: false }
-            }
-        )
-
-
-    const handleSubmit = (inputs) => {
-
-        dispatch(pending())
+    const handleSubmit = (inputsData) => {
+        const { title, description, status } = inputsData
+        dispatch({ type: TodoTypes.REQ_PENDING })
         runAfter(
-
             async () => {
                 try {
-                    let r = await actionFunc(inputs)
-                    dispatch(successReq(`Task ${r.data.id} ${action === "save" ? "added" : "updated"} successfully 😎 !`))
+                    const r = await TodoApi.post(new TaskModel(null, title, description, status))
+                    dispatch({ type: TodoTypes.ADD, payload: { todo: r.data, msg: "todo saved successfully 😅" } })
                 } catch (error) {
-                    dispatch(errorReq(`Something is wrong 😢!`))
+                    dispatch({ type: TodoTypes.REQ_FAILD, payload: "something goes wrong 😅" })
                 }
             }
         )
-
-
     }
 
-    return { ...state, handleSubmit }
+    return { todo, handleSubmit }
 }
+//--------------DELETE TODO-----------
+let setDeleteLoader = Function
+
+const DeleteTodo = () => {
+
+    const { dispatch, todo } = useContext(TodoContext)
+    const onDeleteTask = (todoId, setLoading) => {
+        setDeleteLoader = setLoading
+        dispatch({ type: TodoTypes.REQ_PENDING })
+        runAfter(
+            async () => {
+                try {
+                    await TodoApi.delete(todoId)
+                    dispatch({ type: TodoTypes.DEL, payload: { todoId, msg: " deleted successfuly" } })
+                } catch (error) {
+                    dispatch({ type: TodoTypes.REQ_FAILD, payload: { msg: "Someting goes wrong 😅" } })
+                }
+            }
+        )
+    }
+
+    useEffect(() => {
+        setDeleteLoader(todo.loading)
+    }, [todo.loading])
+
+    return { onDeleteTask }
+}
+
+//----------------FETCH TODOS------
+const FetchTodos = () => {
+
+    const { dispatch, todo: { todos, loading } } = useContext()
+
+    useEffect(() => {
+        dispatch({ type: TodoTypes.REQ_PENDING })
+        runAfter(async () => {
+            try {
+                let r = await TodoApi.getAll()
+                dispatch({ type: TodoTypes.FETCH_ALL, payload: { list: r.data } })
+            } catch (error) {
+                dispatch({ type: TodoTypes.REQ_FAILD, payload: { msg: "Something goes wrong 😅" } })
+            }
+        })
+    }, [])
+
+    return {
+        todos, loading
+    }
+}
+//----------------EDIT TODO--------
+
+
 
 
 
 export const UseHook = {
-
-    saveTodo: ActionHook,
-    editTodo: () => ActionHook("edit")
+    SaveTodo,
+    DeleteTodo,
+    FetchTodos
 } 

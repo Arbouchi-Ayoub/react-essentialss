@@ -5,11 +5,10 @@ import { Button, Loader } from "shared/interface";
 export const Task = ({ data = new TaskModel(), onDelete }) => {
 
   const [loading, setLoading] = useState(false)
-
+    
   const handleDelete = () => {
     if (window.confirm("Are you sure ?")) {
-      setLoading(true)
-      onDelete(data.id, setLoading)
+      onDelete(data.id,setLoading)
     }
   }
 
@@ -31,15 +30,13 @@ export const Task = ({ data = new TaskModel(), onDelete }) => {
           onClick={handleDelete}
         >
           DEL
-          { loading ? <Loader /> : null }
+          {loading ? <Loader /> : null}
         </Button>
 
         <Button
           color="primary"
           className="me-1"
-          onClick={ handleEdit }
-          target="edit"
-          modal
+          onClick={handleEdit}
         >
           EDIT
         </Button>

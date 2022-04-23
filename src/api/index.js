@@ -19,17 +19,24 @@ export class TodoApi {
         })
     }
 
-    static get(todoId=0){
+    static get(todoId = 0) {
         return client.request({
-            url:"/todos/"+ todoId,
-            method:"GET"
+            url: "/todos/" + todoId,
+            method: "GET"
         })
     }
 
-    static getAll(){
+    static getAll() {
         return client.request({
-            url:"/todos/",
-            method:"GET"
+            url: "/todos/",
+            method: "GET"
+        })
+    }
+
+    static delete(todoId = 0) {
+        return client.request({
+            url: '/todos/' + todoId,
+            method: "DELETE"
         })
     }
 

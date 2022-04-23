@@ -4,15 +4,15 @@ import { ActionsNames } from "shared/layouts/CONSTANT"
 
 export const AddTask = () => {
 
-  const { msg, isLoading, handleSubmit } = UseHook.saveTodo()
+  const { todo, handleSubmit } = UseHook.SaveTodo()
 
   return (
 
     <FormUI
       actionName={ActionsNames.SAVE}
       onSubmit={handleSubmit}
-      isLoading={isLoading}
-      msg={msg}
+      isLoading={todo.loading}
+      msg={todo.msg}
     />
   )
 }
