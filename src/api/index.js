@@ -21,7 +21,14 @@ export class TodoApi {
 
     static get(todoId=0){
         return client.request({
-            url:"/todos/"+ todo.id,
+            url:"/todos/"+ todoId,
+            method:"GET"
+        })
+    }
+
+    static getAll(){
+        return client.request({
+            url:"/todos/",
             method:"GET"
         })
     }

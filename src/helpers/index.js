@@ -15,3 +15,7 @@ export const isThereAnEmptyValue = (data) => {
     }
     return false
 }
+
+export const runAfter = (func, delay = 2000) => {
+    setTimeout(() => func(), delay)
+}

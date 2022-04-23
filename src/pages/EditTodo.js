@@ -1,10 +1,11 @@
 import React from 'react'
 import { ThemeWebsite } from 'theme/website'
+import { EditTask } from "components"
 
 export const EditTodoPage = () => {
   return (
-    <ThemeWebsite>
-      <h1>Edit Todo Page</h1>
+    <ThemeWebsite title="Edit Todo">
+      <EditTask />
     </ThemeWebsite>
   )
 }

@@ -1,8 +1,9 @@
 import { Task } from "components";
-import { TaskModel } from "model";
 
 
-export const ListTask = ({ list = [new TaskModel()], onDeleteTask }) => {
+export const ListTask = ({ list = [], onDeleteTask }) => {
+
+
   return (
     <ul>
       {

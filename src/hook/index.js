@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react"
+import { useReducer } from "react"
 import { TodoApi } from "api"
 import { TaskModel, ActionModel } from "model"
 
@@ -41,10 +41,6 @@ const requestReducer = (prevState, { type, payload }) => {
     }
 }
 
-//helpers
-const runAfter = (func, delay = 2000) => {
-    setTimeout(() => func(), delay)
-}
 
 const ActionHook = (action = "save") => {
 
