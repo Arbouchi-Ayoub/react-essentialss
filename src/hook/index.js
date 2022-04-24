@@ -3,6 +3,7 @@ import { TodoApi } from "api"
 import { TodoContext, TodoTypes } from "context/todo"
 import { runAfter } from "helpers"
 import { TaskModel } from "model"
+import { useParams } from "react-router-dom"
 
 //--------------ADD TODO-----------
 const SaveTodo = () => {
@@ -77,7 +78,27 @@ const FetchTodos = () => {
 }
 //----------------EDIT TODO--------
 
+const EditTodo = () => {
 
+    const { dispatch, todo } = useContext(TodoContext)
+    useParams()
+    const handleSubmit = (inputsData) => {
+        const { title, description, status } = inputsData
+        dispatch({ type: TodoTypes.REQ_PENDING })
+        runAfter(
+            async () => {
+                try {
+                    const r = await TodoApi.post(new TaskModel(null, title, description, status))
+                    dispatch({ type: TodoTypes.ADD, payload: { todo: r.data, msg: "todo saved successfully 😅" } })
+                } catch (error) {
+                    dispatch({ type: TodoTypes.REQ_FAILD, payload: "something goes wrong 😅" })
+                }
+            }
+        )
+    }
+
+    return { todo, handleSubmit }
+}
 
 
 
