@@ -31,20 +31,52 @@ const SaveTodo = () => {
     return { handleSubmit, loading, msg }
 }
 //--------------DELETE TODO-----------
-let setDeleteLoader = Function
+// let setDeleteLoader = Function
 
 const DeleteTodo = () => {
 
-    const onDeleteTask = (todoId, setLoading) => {
-        setDeleteLoader = setLoading
+    const { dispatch, todoState: { loading, msg } } = useContext(TodoContext)
 
+    const onDeleteTask = (todoId, setLoading) => {
+        // setDeleteLoader = setLoading
+        // mark request as pended
+        dispatch({ type: TodoTypes.REQ_PENDING })
+        // delete post from the server
+        runAfter(() => {
+            TodoApi.delete(todoId)
+                .then((r) => {
+                    dispatch({ type: TodoTypes.DELETE, payload: { todoId, message: "todo deleted successfuly !" } })
+                })
+                .catch((e) => {
+                    dispatch({ type: TodoTypes.REQ_FAILD, payload: { message: "Something goes wrong !" } })
+                })
+        })
     }
+    return { onDeleteTask, loading, msg }
 
 }
 
 //----------------FETCH TODOS------
 const FetchTodos = () => {
 
+    const { dispatch, todoState: { loading, msg } } = useContext(TodoContext)
+
+    const onFetchTodos = () => {
+        // mark request as pended
+        dispatch({ type: TodoTypes.REQ_PENDING })
+        // fetch posts from the server
+        runAfter(() => {
+            TodoApi.getAll()
+                .then((r) => {
+                    dispatch({ type: TodoTypes.FETCH_ALL, payload: { todos: r.data, message: "todos fetched successfuly !" } })
+                }
+                )
+                .catch((e) => {
+                    dispatch({ type: TodoTypes.REQ_FAILD, payload: { message: "Something goes wrong !" } })
+                })
+        })
+    }
+    return { onFetchTodos, loading, msg }
 
 }
 //----------------EDIT TODO--------
