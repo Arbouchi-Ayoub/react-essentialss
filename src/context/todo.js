@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useReducer } from "react"
 
 //intialState
 const intialState = {
@@ -8,7 +8,7 @@ const intialState = {
 }
 
 //types
-const TodoTypes = {
+export const TodoTypes = {
     ADD: "ADD",
     EDIT: "EDIT",
     DEL: "DEL",
