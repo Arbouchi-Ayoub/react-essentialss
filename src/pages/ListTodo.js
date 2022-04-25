@@ -1,6 +1,6 @@
 import { ListTask } from 'components'
-import { TodoContext } from 'context/todo'
-import { UseHook } from 'hook'
+import { TodoContext } from 'shared/context/todo'
+import { UseHook } from 'shared/hook'
 import { useContext } from 'react'
 import { Loader } from 'shared/interface'
 import { ThemeWebsite } from "theme/website"

@@ -1,5 +1,5 @@
 import AppRoutes from "./routes";
-import { TodoProvider } from "context/todo"
+import { TodoProvider } from "shared/context/todo"
 
 function App() {
   return (

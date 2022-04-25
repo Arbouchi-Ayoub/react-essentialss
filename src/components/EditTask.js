@@ -1,5 +1,5 @@
 import { FormUI } from "shared"
-import { UseHook } from "hook"
+import { UseHook } from "shared/hook"
 import { ActionsNames } from "shared/layouts/CONSTANT"
 import { TodoApi } from "api"
 import { useParams } from "react-router-dom"

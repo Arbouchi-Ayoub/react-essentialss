@@ -1,5 +1,5 @@
 import { Task } from "components";
-import { UseHook } from "hook";
+import { UseHook } from "shared/hook";
 
 export const ListTask = ({ list = [] }) => {
 

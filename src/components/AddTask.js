@@ -1,5 +1,5 @@
 import { FormUI } from "shared"
-import { UseHook } from "hook"
+import { UseHook } from "shared/hook"
 import { ActionsNames } from "shared/layouts/CONSTANT"
 
 export const AddTask = () => {

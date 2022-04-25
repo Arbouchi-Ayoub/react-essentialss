@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": "./src"
     },
-    "include": ["./src/*", "src/context/reducers"],
+    "include": ["./src/*",],
     "exclude": ["node_modules"]
 
 }

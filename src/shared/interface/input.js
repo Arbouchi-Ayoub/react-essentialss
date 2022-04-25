@@ -1,6 +1,6 @@
 import { StatusTodo } from 'model'
 import { useEffect, useState } from 'react'
-import { isLocatedInStatusTodo } from 'helpers'
+import { isLocatedInStatusTodo } from 'shared/helpers'
 import { Message } from "shared/interface"
 
 export const InputSelect = ({

@@ -1,6 +1,6 @@
 import { TodoApi } from "api"
-import { TodoContext, TodoTypes } from "context/todo"
-import { runAfter } from "helpers"
+import { TodoContext, TodoTypes } from "shared/context/todo"
+import { runAfter } from "shared/helpers"
 import { TaskModel } from "model"
 import { useContext } from "react"
 import { useParams } from "react-router-dom"
