@@ -12,6 +12,7 @@ import { ErrorPage404 } from "pages/errors/404"
 
 const AppRoutes = () => {
     return (
+        
         <BrowserRouter>
             <Routes>
                 <Route path="" element={<ListTodoPage />} />

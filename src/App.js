@@ -1,9 +1,12 @@
 import AppRoutes from "./routes";
+import { TodoProvider } from "context/todo"
 
 function App() {
   return (
-    <AppRoutes />
+    <TodoProvider>
+      <AppRoutes />
+    </TodoProvider>
   )
 }
-  
+
 export default App;
