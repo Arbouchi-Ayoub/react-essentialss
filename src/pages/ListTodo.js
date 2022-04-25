@@ -1,4 +1,3 @@
-import { TodoApi } from 'api'
 import { ListTask } from 'components'
 import { UseHook } from 'hook'
 import { Loader } from 'shared/interface'

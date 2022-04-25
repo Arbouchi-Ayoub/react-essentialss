@@ -16,14 +16,14 @@ export class TaskModel {
         desc = "",
         status = StatusTodo.TODO,
         dueDate = null,
-        InpDate = null,
-        finDate = null,
+        startDate = null,
+        endDate = null,
         userId = 1) {
 
         this.desc = desc
         this.dueDate = dueDate
-        this.InpDate = InpDate
-        this.finDate = finDate
+        this.startDate = startDate
+        this.endDate = endDate
         this.status = status
         this.id = id
         this.title = title
